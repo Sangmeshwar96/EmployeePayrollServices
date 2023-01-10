@@ -27,3 +27,15 @@ select * from employee_payroll;
 select salary from employee_payroll where name = 'Bill';
 --Selecting all employees with start date between 1/1/2018 and present date
 select * from employee_payroll where start between '2018-01-01' and GETDATE();
+--Add extra column of gender to table
+Alter table employee_payroll
+Add Gender char;
+select * from employee_payroll;
+--Update gender of employees
+update employee_payroll set Gender = 'M' where Name = 'Bill';
+update employee_payroll set Gender = 'M' where Name = 'Charlie';
+update employee_payroll set Gender = 'M' where Name = 'John';
+update employee_payroll set Gender = 'M' where Name = 'Piter';
+update employee_payroll set Gender = 'M' where Name = 'Alex'
+update employee_payroll set Gender = 'F' where name = 'Terissa';
+select * from employee_payroll;
