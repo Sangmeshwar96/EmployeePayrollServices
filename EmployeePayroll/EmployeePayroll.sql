@@ -17,4 +17,5 @@ insert into employee_payroll values
 ('John',250000.00,'2019-01-04'),
 ('Alex',275000.00,'2020-11-14'),
 ('Piter',350000.00,'2021-05-25');
+--Retrieve data from table
 select * from employee_payroll;
