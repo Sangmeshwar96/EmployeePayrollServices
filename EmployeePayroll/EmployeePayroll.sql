@@ -90,3 +90,24 @@ alter table employee_payroll add deduction float, taxable_pay real, income_tax r
 
 --Rename salary column
 EXEC sp_rename 'employee_payroll.salary', 'basic_pay', 'COLUMN';
+
+--make data for Terissa added with department change 
+insert into employee_payroll (name, start, basic_pay, Department) values
+('Terissa', '2019-11-13', '200000', 'Sales');
+
+--Update information for every employee
+Update employee_payroll 
+set PhoneNumber = '9926707344', address = 'New York', deduction = 1000, taxable_pay = 99000, income_tax = 5000, net_pay = 94000 where id = 1;
+Update employee_payroll 
+set PhoneNumber = '9926707344', address = 'London', deduction = 1000, taxable_pay = 99000, income_tax = 5000, net_pay = 94000 where id = 2;
+Update employee_payroll 
+set PhoneNumber = '9926707344', address = 'DC', deduction = 2000, taxable_pay = 99000, income_tax = 4000, net_pay = 95000 where id = 3;
+Update employee_payroll
+set PhoneNumber = '8529631478', address = 'LA', deduction = 3000, taxable_pay = 297000, income_tax = 10000, net_pay = 287000 where id = 4;
+Update employee_payroll
+set PhoneNumber = '8529631478', address = 'Toronto', deduction = 3000, taxable_pay = 297000, income_tax = 10000, net_pay = 287000 where id = 5;
+Update employee_payroll
+set PhoneNumber = '8529631478', address = 'New York', deduction = 3000, taxable_pay = 297000, income_tax = 10000, net_pay = 287000 where id = 6;
+Update employee_payroll
+set PhoneNumber = '9586942335', address = 'Texus', deduction = 2000, taxable_pay = 198000, income_tax = 8000, net_pay = 190000 where name = 'Terissa';
+select * from employee_payroll;
