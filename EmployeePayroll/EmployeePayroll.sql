@@ -54,15 +54,34 @@ select * from employee_payroll;
 select SUM(salary) from employee_payroll
 where gender = 'M'
 group by gender;
+
 --Average salary according to gender
-select AVG(salary), gender from employee_payroll
-group by gender;
+select AVG(salary), Gender from employee_payroll
+group by Gender;
+
 --Minimum salary according to gender
-select MIN(salary), gender from employee_payroll
-group by gender;
+select MIN(salary), Gender from employee_payroll
+group by Gender;
+
 --Maximum salary acording to gender
-select MAX(salary), gender from employee_payroll
-group by gender;
+select MAX(salary), Gender from employee_payroll
+group by Gender;
+
 --Employee count according to gender
-select COUNT(gender), gender from employee_payroll
-group by gender;
+select COUNT(Gender), Gender from employee_payroll
+group by Gender;
+
+--Add additional Employee information columns
+alter table employee_payroll add phone_number varchar(13)
+alter table employee_payroll add address varchar(250), Department varchar(20);
+alter table employee_payroll add PhoneNumber bigint;
+alter table employee_payroll add Address varchar(255) not null default 'India';
+
+--Add department for existing enteries
+Update employee_payroll set department = 'Sales' where id in (1 , 3 ,4 , 6);
+Update employee_payroll set department = 'Marketting' where id in(2,5);
+
+--Adding constraints
+alter table employee_payroll alter column department varchar(20) Not null;
+select * from employee_payroll;
+
