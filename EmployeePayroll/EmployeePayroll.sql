@@ -85,3 +85,8 @@ Update employee_payroll set department = 'Marketting' where id in(2,5);
 alter table employee_payroll alter column department varchar(20) Not null;
 select * from employee_payroll;
 
+--Add salary divisions
+alter table employee_payroll add deduction float, taxable_pay real, income_tax real, net_pay real;
+
+--Rename salary column
+EXEC sp_rename 'employee_payroll.salary', 'basic_pay', 'COLUMN';
