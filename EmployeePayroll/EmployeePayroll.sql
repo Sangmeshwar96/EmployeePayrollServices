@@ -19,10 +19,6 @@ select * from employee_payroll;
 
 --Inserting data into table
 insert into employee_payroll values
-('John',250000.00,'2019-01-04'),
-('Alex',275000.00,'2020-11-14'),
-('Piter',350000.00,'2021-05-25');
-insert into employee_payroll values
 ('Bill',100000.00,'2018-01-03'),
 ('Terissa',200000.00,'2019-11-13'),
 ('Charlie',300000.00,'2020-05-21');
@@ -44,9 +40,6 @@ select * from employee_payroll;
 --Update gender of employees
 update employee_payroll set Gender = 'M' where Name = 'Bill';
 update employee_payroll set Gender = 'M' where Name = 'Charlie';
-update employee_payroll set Gender = 'M' where Name = 'John';
-update employee_payroll set Gender = 'M' where Name = 'Piter';
-update employee_payroll set Gender = 'M' where Name = 'Alex'
 update employee_payroll set Gender = 'F' where name = 'Terissa';
 select * from employee_payroll;
 
@@ -72,14 +65,13 @@ select COUNT(Gender), Gender from employee_payroll
 group by Gender;
 
 --Add additional Employee information columns
-alter table employee_payroll add phone_number varchar(13)
-alter table employee_payroll add address varchar(250), Department varchar(20);
-alter table employee_payroll add PhoneNumber bigint;
-alter table employee_payroll add Address varchar(255) not null default 'India';
+alter table employee_payroll add Phone_Number bigint;
+alter table employee_payroll add Department varchar(25);
+alter table employee_payroll add Address varchar(255) not null default 'America';
 
 --Add department for existing enteries
-Update employee_payroll set department = 'Sales' where id in (1 , 3 ,4 , 6);
-Update employee_payroll set department = 'Marketting' where id in(2,5);
+Update employee_payroll set Department = 'Sales' where id in (1 , 2);
+Update employee_payroll set Department = 'Marketting' where id = 3;
 
 --Adding constraints
 alter table employee_payroll alter column department varchar(20) Not null;
@@ -97,17 +89,61 @@ insert into employee_payroll (name, start, basic_pay, Department) values
 
 --Update information for every employee
 Update employee_payroll 
-set PhoneNumber = '9926707344', address = 'New York', deduction = 1000, taxable_pay = 99000, income_tax = 5000, net_pay = 94000 where id = 1;
-Update employee_payroll 
-set PhoneNumber = '9926707344', address = 'London', deduction = 1000, taxable_pay = 99000, income_tax = 5000, net_pay = 94000 where id = 2;
-Update employee_payroll 
-set PhoneNumber = '9926707344', address = 'DC', deduction = 2000, taxable_pay = 99000, income_tax = 4000, net_pay = 95000 where id = 3;
+set Phone_Number = '9926707344', Address = 'Damoh Naka', deduction = 1000, taxable_pay = 99000, income_tax = 5000, net_pay = 94000 where id = 1
 Update employee_payroll
-set PhoneNumber = '8529631478', address = 'LA', deduction = 3000, taxable_pay = 297000, income_tax = 10000, net_pay = 287000 where id = 4;
+set Phone_Number = '8529631478', Address = 'PNB Colony', deduction = 3000, taxable_pay = 297000, income_tax = 10000, net_pay = 287000 where id = 3
 Update employee_payroll
-set PhoneNumber = '8529631478', address = 'Toronto', deduction = 3000, taxable_pay = 297000, income_tax = 10000, net_pay = 287000 where id = 5;
-Update employee_payroll
-set PhoneNumber = '8529631478', address = 'New York', deduction = 3000, taxable_pay = 297000, income_tax = 10000, net_pay = 287000 where id = 6;
-Update employee_payroll
-set PhoneNumber = '9586942335', address = 'Texus', deduction = 2000, taxable_pay = 198000, income_tax = 8000, net_pay = 190000 where name = 'Terissa';
+set Phone_Number = '9586942335', Address = 'Shanti Nagar', deduction = 2000, taxable_pay = 198000, income_tax = 8000, net_pay = 190000 where name = 'Terissa';
 select * from employee_payroll;
+
+--Create separate employee table
+create table employee
+(
+Id int identity(1,1) not null primary key,
+Name varchar(25) not null ,
+Gender char(1) not null,
+Phone_Number varchar(13) not null,
+Address varchar(250) not null default 'India',
+);
+
+--Insert data into employee table
+insert into employee values
+('Bill', 'M', '9424787443', 'Shanti Nagar'),
+('Terissa', 'F', '8109322276', 'Damoh Naka'),
+('Charlie', 'M', '9926707344', 'Panchsheel Nagar');
+select * from employee;
+
+--Create separate EmployeeDepartment table
+create table EmployeeDepartment
+(
+DepartmentId int not null primary key,
+Department varchar (20) not null,
+EmployeeId int not null foreign key references Employee(Id) on delete cascade
+);
+
+--Insert data into EmployeeDepartment table
+insert into EmployeeDepartment values
+(101, 'Sales',1),
+(102, 'Sales',2),
+(103, 'HR', 3),
+(104,'Marketting',2);
+select * from EmployeeDepartment;
+
+--Create separate Payroll table
+create table Payroll
+(
+Id int not null foreign key references Employee(Id) on delete cascade,
+Start date not null,
+Basic_pay money not null,
+Deduction money,
+Taxable_pay money,
+Income_tax money,
+Net_pay money not null
+);
+
+--Insert data into Payroll table
+insert into Payroll values
+(1,'2018-01-03', 100000, 10000, 90000, 1000, 89000),
+(2, '2019-11-13', 200000, 10000, 190000,3000,187000),
+(3, '2020-05-21', 300000, 20000, 280000, 5000, 275000);
+select * from Payroll;
